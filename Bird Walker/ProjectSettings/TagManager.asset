@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Obstacle
+  - Fisch
   layers:
   - Default
   - TransparentFX

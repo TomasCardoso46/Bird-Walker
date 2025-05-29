@@ -23,6 +23,13 @@ public class Fisch : MonoBehaviour
     public float changeTargetInterval = 2f; // time between direction changes
     private float targetChangeTimer = 0f;
 
+    [Header("Scripts and Object to Control")]
+    public MonoBehaviour scriptToEnable1;
+    public MonoBehaviour scriptToEnable2;
+    public MonoBehaviour scriptToEnable3;
+
+    public GameObject objectToDisable;
+
     public GameObject anzol;
 
     private void Start()
@@ -74,7 +81,16 @@ public class Fisch : MonoBehaviour
     private void Fisched()
     {
         Debug.Log("Fisched");
-        // Add logic for catching the fish here
+
+        // Enable 3 specific scripts
+        if (scriptToEnable1 != null) scriptToEnable1.enabled = true;
+        if (scriptToEnable2 != null) scriptToEnable2.enabled = true;
+        if (scriptToEnable3 != null) scriptToEnable3.enabled = true;
+
+        // Disable 1 specific GameObject
+        if (objectToDisable != null) objectToDisable.SetActive(false);
+
+        // Add any other fishing logic here
     }
 
     private void OnTriggerEnter(Collider other)
