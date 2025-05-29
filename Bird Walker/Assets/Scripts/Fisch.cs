@@ -19,6 +19,10 @@ public class Fisch : MonoBehaviour
     private RectTransform rectTransform;
     private float targetX;
 
+    [Header("Random Movement Settings")]
+    public float changeTargetInterval = 2f; // time between direction changes
+    private float targetChangeTimer = 0f;
+
     public GameObject anzol;
 
     private void Start()
@@ -29,6 +33,18 @@ public class Fisch : MonoBehaviour
 
     private void Update()
     {
+        // Handle movement
+        MoveRandomlyX();
+
+        // Update timer for changing direction
+        targetChangeTimer += Time.deltaTime;
+        if (targetChangeTimer >= changeTargetInterval)
+        {
+            PickNewTargetX();
+            targetChangeTimer = 0f;
+        }
+
+        // Handle fishing logic
         if (isInZone && !hasFisched)
         {
             currentTime += Time.deltaTime;
@@ -37,8 +53,6 @@ public class Fisch : MonoBehaviour
                 Fisched();
                 hasFisched = true;
             }
-
-            MoveRandomlyX();
         }
     }
 
@@ -48,11 +62,6 @@ public class Fisch : MonoBehaviour
         Vector3 currentPosition = rectTransform.anchoredPosition;
         currentPosition.x = Mathf.MoveTowards(currentPosition.x, targetX, step);
         rectTransform.anchoredPosition = currentPosition;
-
-        if (Mathf.Approximately(currentPosition.x, targetX))
-        {
-            PickNewTargetX();
-        }
     }
 
     private void PickNewTargetX()
@@ -65,7 +74,7 @@ public class Fisch : MonoBehaviour
     private void Fisched()
     {
         Debug.Log("Fisched");
-        // Do more things here later...
+        // Add logic for catching the fish here
     }
 
     private void OnTriggerEnter(Collider other)
@@ -81,7 +90,6 @@ public class Fisch : MonoBehaviour
         if (other.gameObject == anzol)
         {
             isInZone = false;
-            
         }
     }
 }
