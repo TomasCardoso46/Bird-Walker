@@ -3295,6 +3295,10 @@ PrefabInstance:
       propertyPath: m_AngularDrag
       value: 10000
       objectReference: {fileID: 0}
+    - target: {fileID: 6407103215592317431, guid: 4f1dfb2e87a28fa4c9a9d9fded43153c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.44
+      objectReference: {fileID: 0}
     - target: {fileID: 8254649465458461364, guid: 4f1dfb2e87a28fa4c9a9d9fded43153c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
