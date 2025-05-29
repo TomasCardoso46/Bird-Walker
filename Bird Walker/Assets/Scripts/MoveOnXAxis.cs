@@ -10,10 +10,34 @@ public class MoveOnXAxis : MonoBehaviour
     private float pHoldTimer = 0f;
     private float qHoldTimer = 0f;
 
+    private KeyCode? lastKeyPressed = null;
+
     void Update()
     {
         bool qHeld = Input.GetKey(KeyCode.Q);
         bool pHeld = Input.GetKey(KeyCode.P);
+
+        // Detect key down to check for double press
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (lastKeyPressed == KeyCode.Q)
+            {
+                Debug.Log("Q pressed twice. Disabling script.");
+                DisableScript();
+                return;
+            }
+            lastKeyPressed = KeyCode.Q;
+        }
+        else if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (lastKeyPressed == KeyCode.P)
+            {
+                Debug.Log("P pressed twice. Disabling script.");
+                DisableScript();
+                return;
+            }
+            lastKeyPressed = KeyCode.P;
+        }
 
         // Disable if both keys are held
         if (qHeld && pHeld)
