@@ -1,4 +1,7 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class MoveOnXAxis : MonoBehaviour
 {
@@ -100,6 +103,13 @@ public class MoveOnXAxis : MonoBehaviour
         {
             objectToDeactivate.SetActive(false);
         }
+        StartCoroutine(LoadMenuAfterDelay());
+        
+    }
+    private IEnumerator LoadMenuAfterDelay()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("Menu");
         enabled = false;
     }
 }
