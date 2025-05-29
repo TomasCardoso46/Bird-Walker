@@ -12,6 +12,9 @@ public class MoveOnXAxis : MonoBehaviour
 
     private KeyCode? lastKeyPressed = null;
 
+    [SerializeField] private GameObject objectToActivate;
+    [SerializeField] private GameObject objectToDeactivate;
+
     void Update()
     {
         bool qHeld = Input.GetKey(KeyCode.Q);
@@ -86,8 +89,17 @@ public class MoveOnXAxis : MonoBehaviour
         }
     }
 
-    void DisableScript()
+    public void DisableScript()
     {
+        if (objectToActivate != null)
+        {
+            objectToActivate.SetActive(true);
+        }
+
+        if (objectToDeactivate != null)
+        {
+            objectToDeactivate.SetActive(false);
+        }
         enabled = false;
     }
 }
