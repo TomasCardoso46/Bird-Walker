@@ -81,6 +81,7 @@ public class Fisch : MonoBehaviour
     private void Fisched()
     {
         Debug.Log("Fisched");
+        currentTime = 0;
 
         // Enable 3 specific scripts
         if (scriptToEnable1 != null) scriptToEnable1.enabled = true;

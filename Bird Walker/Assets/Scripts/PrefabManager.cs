@@ -8,7 +8,7 @@ public class SpawnOnTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Spawner"))
         {
             Vector3 position = spawnPoint ? spawnPoint.position : transform.position;
             GameObject newObject = Instantiate(prefabToSpawn, position, Quaternion.identity);
