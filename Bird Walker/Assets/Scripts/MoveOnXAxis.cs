@@ -34,7 +34,7 @@ public class MoveOnXAxis : MonoBehaviour
             }
             lastKeyPressed = KeyCode.Q;
         }
-        else if (Input.GetKeyDown(KeyCode.P))
+        else if (Input.GetKeyUp(KeyCode.P))
         {
             if (lastKeyPressed == KeyCode.P)
             {
@@ -46,7 +46,7 @@ public class MoveOnXAxis : MonoBehaviour
         }
 
         // Disable if both keys are held
-        if (qHeld && pHeld)
+        if (qHeld && !pHeld)
         {
             Debug.Log("Both Q and P held. Disabling script.");
             DisableScript();
@@ -54,7 +54,7 @@ public class MoveOnXAxis : MonoBehaviour
         }
 
         // Handle P hold time
-        if (pHeld)
+        if (!pHeld)
         {
             pHoldTimer += Time.deltaTime;
             if (pHoldTimer >= pHoldDurationLimit)
@@ -86,7 +86,7 @@ public class MoveOnXAxis : MonoBehaviour
         }
 
         // Move if only one key is held
-        if (qHeld || pHeld)
+        if (qHeld || !pHeld)
         {
             transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
