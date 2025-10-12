@@ -118,27 +118,27 @@ public class CheckpointMover : MonoBehaviour
     private void HandleCustomInputs()
     {
         // Input1: hold to follow normal checkpoints from start, release to go to bonus 1
-        if (Input.GetKeyDown(input1))
+        if (Input.GetKeyUp(input1))
         {
             currentCheckpointIndex = 0;
             SetMovementStopped(false);
             holdingInput1 = true;
         }
 
-        if (Input.GetKeyUp(input1))
+        if (Input.GetKeyDown(input1))
         {
             holdingInput1 = false;
             GoToBonusCheckpoint(bonusCheckpoint1);
         }
 
         // Input2: hold to go to bonus 2, release to stop instantly
-        if (Input.GetKeyDown(input2))
+        if (Input.GetKeyUp(input2))
         {
             SetMovementStopped(false);
             holdingInput2 = true;
         }
 
-        if (Input.GetKeyUp(input2))
+        if (Input.GetKeyDown(input2))
         {
             holdingInput2 = false;
             SetMovementStopped(true);

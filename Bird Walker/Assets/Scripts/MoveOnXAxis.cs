@@ -2,110 +2,123 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class MoveOnXAxis : MonoBehaviour
 {
+    [Header("Movement Settings")]
     public float speed = 5f;
 
-    public float pHoldDurationLimit = 2f; // seconds
-    public float qHoldDurationLimit = 2f; // seconds
+    [Header("Timing")]
+    public float releaseDurationLimit = 2f; // how long a key can stay released before failure
 
-    private float pHoldTimer = 0f;
-    private float qHoldTimer = 0f;
-
-    private KeyCode? lastKeyPressed = null;
-
+    [Header("Optional GameObject Toggles")]
     [SerializeField] private GameObject objectToActivate;
     [SerializeField] private GameObject objectToDeactivate;
 
+    private float pReleaseTimer = 0f;
+    private float qReleaseTimer = 0f;
+
+    private KeyCode? lastKeyPressed = null;
+    private bool gameStarted = false;
+    private bool gameActive = false;
+
     void Update()
     {
-        bool qHeld = Input.GetKey(KeyCode.Q);
         bool pHeld = Input.GetKey(KeyCode.P);
+        bool qHeld = Input.GetKey(KeyCode.Q);
 
-        // Detect key down to check for double press
+        // ---------- READY SYSTEM ----------
+        if (!gameStarted)
+        {
+            if (pHeld && qHeld)
+            {
+                Debug.Log("Both keys held - READY!");
+                gameStarted = true;
+                gameActive = true;
+            }
+            return; // wait until both are held once
+        }
+
+        // ---------- GAMEPLAY ----------
+        if (!gameActive) return;
+
+        // --- Double press check (fail-safe) ---
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (lastKeyPressed == KeyCode.Q)
             {
-                Debug.Log("Q pressed twice. Disabling script.");
+                Debug.Log("Q pressed twice. Failure!");
                 DisableScript();
                 return;
             }
             lastKeyPressed = KeyCode.Q;
         }
-        else if (Input.GetKeyUp(KeyCode.P))
+        else if (Input.GetKeyDown(KeyCode.P))
         {
             if (lastKeyPressed == KeyCode.P)
             {
-                Debug.Log("P pressed twice. Disabling script.");
+                Debug.Log("P pressed twice. Failure!");
                 DisableScript();
                 return;
             }
             lastKeyPressed = KeyCode.P;
         }
 
-        // Disable if both keys are held
-        if (qHeld && !pHeld)
+        // --- FAILURE CONDITION: both not held ---
+        if (!pHeld && !qHeld)
         {
-            Debug.Log("Both Q and P held. Disabling script.");
+            Debug.Log("Both keys released - FAILURE!");
             DisableScript();
             return;
         }
 
-        // Handle P hold time
+        // --- Handle release timers ---
         if (!pHeld)
         {
-            pHoldTimer += Time.deltaTime;
-            if (pHoldTimer >= pHoldDurationLimit)
+            pReleaseTimer += Time.deltaTime;
+            if (pReleaseTimer >= releaseDurationLimit)
             {
-                Debug.Log("P held too long. Disabling script.");
+                Debug.Log("P not held too long - FAILURE!");
                 DisableScript();
                 return;
             }
         }
-        else
-        {
-            pHoldTimer = 0f;
-        }
+        else pReleaseTimer = 0f;
 
-        // Handle Q hold time
-        if (qHeld)
+        if (!qHeld)
         {
-            qHoldTimer += Time.deltaTime;
-            if (qHoldTimer >= qHoldDurationLimit)
+            qReleaseTimer += Time.deltaTime;
+            if (qReleaseTimer >= releaseDurationLimit)
             {
-                Debug.Log("Q held too long. Disabling script.");
+                Debug.Log("Q not held too long - FAILURE!");
                 DisableScript();
                 return;
             }
         }
-        else
-        {
-            qHoldTimer = 0f;
-        }
+        else qReleaseTimer = 0f;
 
-        // Move if only one key is held
-        if (qHeld || !pHeld)
+        // --- MOVEMENT LOGIC ---
+        // Move when exactly one key is released (one held, one not)
+        if ((pHeld && !qHeld) || (!pHeld && qHeld))
         {
             transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
+
+        // If both held — idle (no movement)
     }
 
     public void DisableScript()
     {
+        gameActive = false;
+
         if (objectToActivate != null)
-        {
             objectToActivate.SetActive(true);
-        }
 
         if (objectToDeactivate != null)
-        {
             objectToDeactivate.SetActive(false);
-        }
+
         StartCoroutine(LoadMenuAfterDelay());
-        
     }
+
     private IEnumerator LoadMenuAfterDelay()
     {
         yield return new WaitForSeconds(3f);
