@@ -9,6 +9,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("WalkTest");
     }
 
+    public void Obstacle()
+    {
+        SceneManager.LoadScene("Obstacles");
+    }
+
     // This method quits the application
     public void Quit()
     {

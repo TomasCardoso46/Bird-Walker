@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class SpawnOnTrigger : MonoBehaviour
 {
-    public GameObject prefabToSpawn;      // Prefab to spawn
-    public Transform spawnPoint;          // Optional: custom spawn location
-    public Transform parentObject;        // Parent under which the new prefab will be placed
+    [SerializeField] private GameObject prefabToSpawn;      // Prefab to spawn
+    [SerializeField] private Transform spawnPoint;          // Optional: custom spawn location
+    private Transform parentObject;        // Parent under which the new prefab will be placed
+
+    private void Start()
+    {
+        parentObject = GameObject.FindGameObjectWithTag("Mover").transform;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
