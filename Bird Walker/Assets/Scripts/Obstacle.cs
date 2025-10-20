@@ -6,7 +6,7 @@ public class Obstacle : MonoBehaviour
 
     void Start()
     {
-        moveScript = FindObjectOfType<MoveOnXAxis>();
+        moveScript = FindFirstObjectByType<MoveOnXAxis>();
 
         if (moveScript == null)
         {
