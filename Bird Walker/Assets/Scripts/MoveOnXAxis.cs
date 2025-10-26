@@ -14,6 +14,11 @@ public class MoveOnXAxis : MonoBehaviour
     [SerializeField] private GameObject objectToActivate;
     [SerializeField] private GameObject objectToDeactivate;
 
+
+    [Header("Ragdolls")]
+    [SerializeField] private ForceApplier upperRight, lowerRight, upperLeft, lowerLeft;
+    [SerializeField] private float force;
+
     private float pReleaseTimer = 0f;
     private float qReleaseTimer = 0f;
 
@@ -47,6 +52,7 @@ public class MoveOnXAxis : MonoBehaviour
             if (lastKeyPressed == KeyCode.Q)
             {
                 Debug.Log("Q pressed twice. Failure!");
+                upperLeft.ApplyForce(0, force, 0);
                 DisableScript();
                 return;
             }
@@ -57,6 +63,7 @@ public class MoveOnXAxis : MonoBehaviour
             if (lastKeyPressed == KeyCode.P)
             {
                 Debug.Log("P pressed twice. Failure!");
+                upperRight.ApplyForce(0, force, 0);
                 DisableScript();
                 return;
             }
@@ -67,6 +74,7 @@ public class MoveOnXAxis : MonoBehaviour
         if (!pHeld && !qHeld)
         {
             Debug.Log("Both keys released - FAILURE!");
+            upperLeft.ApplyForce(0, 0, 0);
             DisableScript();
             return;
         }
@@ -78,6 +86,7 @@ public class MoveOnXAxis : MonoBehaviour
             if (pReleaseTimer >= releaseDurationLimit)
             {
                 Debug.Log("P not held too long - FAILURE!");
+                lowerRight.ApplyForce(0, 0, force);
                 DisableScript();
                 return;
             }
@@ -90,6 +99,7 @@ public class MoveOnXAxis : MonoBehaviour
             if (qReleaseTimer >= releaseDurationLimit)
             {
                 Debug.Log("Q not held too long - FAILURE!");
+                lowerLeft.ApplyForce(0, 0, force);
                 DisableScript();
                 return;
             }
@@ -113,8 +123,8 @@ public class MoveOnXAxis : MonoBehaviour
         if (objectToActivate != null)
             objectToActivate.SetActive(true);
 
-        if (objectToDeactivate != null)
-            objectToDeactivate.SetActive(false);
+        //if (objectToDeactivate != null)
+            //objectToDeactivate.SetActive(false);
 
         StartCoroutine(LoadMenuAfterDelay());
     }
