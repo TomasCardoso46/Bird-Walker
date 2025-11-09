@@ -364,6 +364,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 124
   m_CollisionDetection: 0
+--- !u!4 &197014874 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6068013880125775217, guid: ce65bb7487d8f74439b337168a3c9a73, type: 3}
+  m_PrefabInstance: {fileID: 8815301235631869940}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &262406362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,6 +1312,43 @@ RectTransform:
   m_AnchoredPosition: {x: 300, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!4 &1094264244 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8104395365120806201, guid: ce65bb7487d8f74439b337168a3c9a73, type: 3}
+  m_PrefabInstance: {fileID: 8815301235631869940}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1288392291 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8531231315790817386, guid: ce65bb7487d8f74439b337168a3c9a73, type: 3}
+  m_PrefabInstance: {fileID: 8815301235631869940}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1288392299 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2420052578958029526, guid: ce65bb7487d8f74439b337168a3c9a73, type: 3}
+  m_PrefabInstance: {fileID: 8815301235631869940}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1288392300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288392291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64e3610ed1800044e9df29c498f59aa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BodyWiggle
+  neckRoot: {fileID: 1094264244}
+  neckMid: {fileID: 1582088365}
+  neckEnd: {fileID: 197014874}
+  stiffness: 100
+  damping: 100
+  maxAngle: 0
+  followSpeed: 1
+  bodyRoot: {fileID: 1288392299}
+  stepSwayAmount: 0.15
+  stepSwaySpeed: 5
 --- !u!65 &1429828201
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1468,6 +1510,11 @@ MonoBehaviour:
   Ptarget: {fileID: 888452884}
   Qtarget: {fileID: 515415281}
   moveSpeed: 400
+--- !u!4 &1582088365 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2149847480364448930, guid: ce65bb7487d8f74439b337168a3c9a73, type: 3}
+  m_PrefabInstance: {fileID: 8815301235631869940}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1944204052
 GameObject:
   m_ObjectHideFlags: 0
@@ -3062,7 +3109,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8531231315790817386, guid: ce65bb7487d8f74439b337168a3c9a73, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1288392300}
   m_SourcePrefab: {fileID: 100100000, guid: ce65bb7487d8f74439b337168a3c9a73, type: 3}
 --- !u!1 &8988144919305399387
 GameObject:
