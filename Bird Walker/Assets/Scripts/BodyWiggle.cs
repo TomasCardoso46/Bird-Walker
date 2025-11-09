@@ -1,92 +1,105 @@
 using UnityEngine;
 
-public class BodyWiggle : MonoBehaviour
+/// <summary>
+/// Physics-based neck/head wobble with pitch and roll only.
+/// Twist around forward axis is locked.
+/// </summary>
+public class JellyHeadPitchRollFixed : MonoBehaviour
 {
-    [Header("Neck Bones (in order Root → End)")]
+    [Header("Head/Neck Bones")]
     public Transform neckRoot;
     public Transform neckMid;
     public Transform neckEnd;
 
-    [Header("Jelly Parameters")]
-    public float stiffness = 6f; // how fast it stabilizes
-    public float damping = 4f;   // reduces oscillation
-    public float maxAngle = 25f; // max bend
-    public float followSpeed = 6f;
+    [Header("Body Reference")]
+    public Transform bodyRoot;
 
-    [Header("Optional motion injection")]
-    public Transform bodyRoot;  // reference to bird body
-    public float stepSwayAmount = 0.15f;
-    public float stepSwaySpeed = 5f;
+    [Header("Physics Settings")]
+    public float stiffness = 6f;
+    public float damping = 4f;
+    public float maxPitch = 25f; // up/down
+    public float maxRoll = 15f;  // left/right
 
-    Vector3 targetDirection;
-    Vector3 velocityRoot;
-    Vector3 velocityMid;
-    Vector3 velocityEnd;
-    float stepTime;
+    [Header("Debug Jiggle")]
+    public float debugJigglePitch = 15f;
+    public float debugJiggleRoll = 10f;
+
+    private Vector3 velocityRoot;
+    private Vector3 velocityMid;
+    private Vector3 velocityEnd;
+    private bool debugJiggle = false;
+    private float jiggleTime = 0f;
+
+    private Quaternion initialRoot;
+    private Quaternion initialMid;
+    private Quaternion initialEnd;
 
     void Start()
     {
-        if (bodyRoot == null)
-            bodyRoot = transform.parent;
+        if (bodyRoot == null) bodyRoot = transform.parent;
 
-        // Initial direction = forward
-        targetDirection = bodyRoot.forward;
+        if (neckRoot != null) initialRoot = neckRoot.localRotation;
+        if (neckMid != null) initialMid = neckMid.localRotation;
+        if (neckEnd != null) initialEnd = neckEnd.localRotation;
     }
 
     void Update()
     {
-        // Optional sway if body has any side-to-side oscillation
-        ApplyStepSway();
+        // Trigger debug jiggle
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            debugJiggle = true;
+            jiggleTime = 0f;
+        }
 
-        // Smoothly update target based on body's forward direction
-        targetDirection = Vector3.Slerp(
-            targetDirection,
-            bodyRoot.forward,
-            Time.deltaTime * followSpeed
+        Vector3 targetPitchRoll = Vector3.zero;
+
+        if (debugJiggle)
+        {
+            jiggleTime += Time.deltaTime;
+            targetPitchRoll.x = Mathf.Sin(jiggleTime * 2f) * debugJigglePitch;
+            targetPitchRoll.z = Mathf.Sin(jiggleTime * 3f) * debugJiggleRoll;
+
+            if (jiggleTime > Mathf.PI * 2f) debugJiggle = false;
+        }
+
+        ApplyJellyXZ(neckRoot, ref velocityRoot, initialRoot, targetPitchRoll);
+        ApplyJellyXZ(neckMid, ref velocityMid, initialMid, targetPitchRoll * 0.7f);
+        ApplyJellyXZ(neckEnd, ref velocityEnd, initialEnd, targetPitchRoll * 0.5f);
+    }
+
+    void ApplyJellyXZ(Transform bone, ref Vector3 velocity, Quaternion initialRotation, Vector3 targetEuler)
+    {
+        if (bone == null) return;
+
+        // Current local rotation
+        Quaternion currentRot = bone.localRotation;
+
+        // Target rotation relative to initial
+        Quaternion targetRot = initialRotation * Quaternion.Euler(
+            Mathf.Clamp(targetEuler.x, -maxPitch, maxPitch),
+            0f, // no yaw
+            Mathf.Clamp(targetEuler.z, -maxRoll, maxRoll)
         );
 
-        // Apply spring motion per-bone
-        ApplyJelly(neckRoot, ref velocityRoot);
-        ApplyJelly(neckMid, ref velocityMid);
-        ApplyJelly(neckEnd, ref velocityEnd);
-    }
+        // Compute delta rotation
+        Quaternion delta = targetRot * Quaternion.Inverse(currentRot);
 
-    void ApplyJelly(Transform bone, ref Vector3 boneVelocity)
-    {
-        // desired orientation
-        Quaternion desiredRot = Quaternion.LookRotation(targetDirection, bodyRoot.up);
-        Quaternion current = bone.rotation;
-
-        // convert to angle/axis
-        Quaternion delta = desiredRot * Quaternion.Inverse(current);
+        // Convert to axis-angle
         delta.ToAngleAxis(out float angle, out Vector3 axis);
-
-        // clamp
         if (angle > 180f) angle -= 360f;
-        angle = Mathf.Clamp(angle, -maxAngle, maxAngle);
+        axis.Normalize();
 
-        Vector3 angularDisplacement = axis.normalized * (angle * Mathf.Deg2Rad);
+        // Lock twist around forward
+        axis = bone.InverseTransformDirection(axis);
+        axis.y = 0f; // lock vertical rotation (twist)
+        axis = bone.TransformDirection(axis);
 
-        // spring dynamics
-        Vector3 acceleration = angularDisplacement * stiffness - boneVelocity * damping;
-        boneVelocity += acceleration * Time.deltaTime;
+        // Spring-damper physics
+        Vector3 angularDisplacement = axis * Mathf.Deg2Rad * angle;
+        Vector3 acceleration = angularDisplacement * stiffness - velocity * damping;
+        velocity += acceleration * Time.deltaTime;
 
-        // integrate
-        bone.rotation = Quaternion.AngleAxis(boneVelocity.magnitude * Mathf.Rad2Deg,
-                                             boneVelocity.normalized) * bone.rotation;
-    }
-
-    void ApplyStepSway()
-    {
-        // You can feed in your own stepping logic here later
-        // For now, generate small procedural oscillation based on body velocity
-        float speed = bodyRoot.GetComponent<Rigidbody>()?.linearVelocity.magnitude ?? 0f;
-
-        stepTime += Time.deltaTime * stepSwaySpeed * Mathf.Lerp(0f, 1f, speed);
-
-        float sway = Mathf.Sin(stepTime) * stepSwayAmount;
-
-        targetDirection += bodyRoot.right * sway;
-        targetDirection.Normalize();
+        bone.localRotation = currentRot * Quaternion.Euler(velocity * Time.deltaTime * Mathf.Rad2Deg);
     }
 }

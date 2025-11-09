@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForceApplier
   toggleScript: {fileID: 72964796409186972}
-  forceMode: 1
+  forceMode: 0
 --- !u!1 &235803392417930161
 GameObject:
   m_ObjectHideFlags: 0
@@ -5287,6 +5287,8 @@ MonoBehaviour:
   reachDistance: 0.1
   input1: 112
   input2: 113
+  holdingInput1: 0
+  holdingInput2: 0
 --- !u!1 &987553583485371877
 GameObject:
   m_ObjectHideFlags: 0
@@ -5844,6 +5846,8 @@ MonoBehaviour:
   reachDistance: 0.1
   input1: 113
   input2: 112
+  holdingInput1: 0
+  holdingInput2: 0
 --- !u!1 &2882659863278947991
 GameObject:
   m_ObjectHideFlags: 0
@@ -6052,7 +6056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForceApplier
   toggleScript: {fileID: 72964796409186972}
-  forceMode: 1
+  forceMode: 0
 --- !u!1 &3184500588758849503
 GameObject:
   m_ObjectHideFlags: 0
@@ -21901,7 +21905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForceApplier
   toggleScript: {fileID: 72964796409186972}
-  forceMode: 1
+  forceMode: 0
 --- !u!1 &6480755255402765754
 GameObject:
   m_ObjectHideFlags: 0
@@ -27691,6 +27695,10 @@ GameObject:
   - component: {fileID: 1022290710626953614}
   - component: {fileID: 152588946084438566}
   - component: {fileID: 72964796409186972}
+  - component: {fileID: 4456536472719671979}
+  - component: {fileID: 2137698950147224374}
+  - component: {fileID: 5827222967946575641}
+  - component: {fileID: 180646623631808417}
   m_Layer: 0
   m_Name: GoofyBirb2
   m_TagString: Spawner
@@ -27858,6 +27866,79 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ToggleComponents
   targetAnimator: {fileID: 8978378154362378653}
   targetRigidbody: {fileID: 1022290710626953614}
+--- !u!114 &4456536472719671979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8531231315790817386}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64e3610ed1800044e9df29c498f59aa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BodyWiggle
+  neckRoot: {fileID: 8104395365120806201}
+  neckMid: {fileID: 2149847480364448930}
+  neckEnd: {fileID: 6068013880125775217}
+  bodyRoot: {fileID: 2420052578958029526}
+  stiffness: 6
+  damping: 4
+  maxPitch: 25
+  maxRoll: 15
+  debugJigglePitch: 15
+  debugJiggleRoll: 10
+--- !u!114 &2137698950147224374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8531231315790817386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387fb60d5c89c6f4b9c41a8bd7c3ec2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NeckSpring
+  neckBones:
+  - {fileID: 8104395365120806201}
+  stiffness: 280
+  damping: 7
+  wiggleAmount: 210
+--- !u!114 &5827222967946575641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8531231315790817386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3c22e8031f83cc44aba950e0c86cd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BodySpring
+  neckBones:
+  - {fileID: 7397625510940902160}
+  stiffness: 280
+  damping: 7
+  wiggleAmount: 210
+--- !u!114 &180646623631808417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8531231315790817386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d7864e372615446a5f4aa3e34c5de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TongueSpring
+  neckBones:
+  - {fileID: 3243894032957110815}
+  stiffness: 401.6
+  damping: 2.7
+  wiggleAmount: 1688.1
 --- !u!1 &8621585394871027083
 GameObject:
   m_ObjectHideFlags: 0
@@ -28146,7 +28227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForceApplier
   toggleScript: {fileID: 72964796409186972}
-  forceMode: 1
+  forceMode: 0
 --- !u!1 &9192688067018783009
 GameObject:
   m_ObjectHideFlags: 0

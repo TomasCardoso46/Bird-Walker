@@ -20,8 +20,8 @@ public class CheckpointMover : MonoBehaviour
     private bool goingToBonus = false;
     private bool goingToReset = false;
     private bool movementStopped = true; // Start stopped by default
-    private bool holdingInput1 = false;
-    private bool holdingInput2 = false;
+    public bool holdingInput1 = false;
+    public bool holdingInput2 = false;
 
     private Transform currentTarget;
 
