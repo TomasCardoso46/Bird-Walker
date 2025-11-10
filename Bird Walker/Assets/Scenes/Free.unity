@@ -651,7 +651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: -3
-  releaseDurationLimit: 0.5
+  releaseDurationLimit: 1
   objectToActivate: {fileID: 8815301235631869941}
   objectToDeactivate: {fileID: 1442901539505573355}
   upperRight: {fileID: 9013093336385941060}
