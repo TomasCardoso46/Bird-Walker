@@ -19,6 +19,9 @@ public class MoveOnXAxis : MonoBehaviour
     [SerializeField] private ForceApplier upperRight, lowerRight, upperLeft, lowerLeft;
     [SerializeField] private float force;
 
+    [Header("Saving")]
+    [SerializeField] private MovementDistanceTracker movementDistanceTracker;
+
     private float pReleaseTimer = 0f;
     private float qReleaseTimer = 0f;
 
@@ -119,6 +122,9 @@ public class MoveOnXAxis : MonoBehaviour
     public void DisableScript()
     {
         gameActive = false;
+        if (movementDistanceTracker != null)
+            movementDistanceTracker.StopAndSave();
+        
 
         if (objectToActivate != null)
             objectToActivate.SetActive(true);

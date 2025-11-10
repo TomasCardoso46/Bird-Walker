@@ -6,12 +6,12 @@ public class MainMenu : MonoBehaviour
     // This method loads the WalkTest scene
     public void StartGame()
     {
-        SceneManager.LoadScene("WalkTest");
+        SceneManager.LoadScene("Free");
     }
 
     public void Obstacle()
     {
-        SceneManager.LoadScene("Obstacles");
+        SceneManager.LoadScene("Timed");
     }
 
     // This method quits the application
