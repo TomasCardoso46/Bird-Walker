@@ -781,7 +781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: -3
   releaseDurationLimit: 0.5
-  objectToActivate: {fileID: 4682883552225005948}
+  objectToActivate: {fileID: 8815301235631869941}
   objectToDeactivate: {fileID: 1442901539505573355}
   upperRight: {fileID: 9013093336385941060}
   lowerRight: {fileID: 6884629611852982526}
@@ -3082,11 +3082,6 @@ Transform:
   - {fileID: 643930947358399981}
   m_Father: {fileID: 4905440111501099074}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4682883552225005948 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5280806266986201872, guid: ce65bb7487d8f74439b337168a3c9a73, type: 3}
-  m_PrefabInstance: {fileID: 8815301235631869940}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4905440111501099074
 Transform:
   m_ObjectHideFlags: 0
@@ -3787,6 +3782,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce65bb7487d8f74439b337168a3c9a73, type: 3}
+--- !u!1 &8815301235631869941 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4093139262425107088, guid: ce65bb7487d8f74439b337168a3c9a73, type: 3}
+  m_PrefabInstance: {fileID: 8815301235631869940}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8988144919305399387
 GameObject:
   m_ObjectHideFlags: 0
