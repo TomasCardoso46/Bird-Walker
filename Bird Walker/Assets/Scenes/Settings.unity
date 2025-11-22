@@ -1094,6 +1094,8 @@ GameObject:
   - component: {fileID: 778005263}
   - component: {fileID: 778005265}
   - component: {fileID: 778005264}
+  - component: {fileID: 778005266}
+  - component: {fileID: 778005267}
   m_Layer: 5
   m_Name: RawImage
   m_TagString: Untagged
@@ -1155,6 +1157,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 778005262}
   m_CullTransparentMesh: 1
+--- !u!114 &778005266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778005262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99761ff3812337d408560840eadae744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GooglyPupilSpring
+  slider: {fileID: 903276523}
+  pupil: {fileID: 778005263}
+  eye: {fileID: 48336221}
+  maxOffset: -2.4
+  spring: 676
+  damping: 10
+--- !u!114 &778005267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778005262}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f5fed169fcf2a4d8a0e89c14a12c01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GooglyPupilUI
+  slider: {fileID: 903276523}
+  pupil: {fileID: 778005263}
+  eye: {fileID: 48336221}
+  maxOffset: 5
+  followSpeed: 10
 --- !u!1 &903276520
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,6 +2142,8 @@ GameObject:
   - component: {fileID: 1872327821}
   - component: {fileID: 1872327823}
   - component: {fileID: 1872327822}
+  - component: {fileID: 1872327824}
+  - component: {fileID: 1872327825}
   m_Layer: 5
   m_Name: RawImage
   m_TagString: Untagged
@@ -2166,6 +2205,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1872327820}
   m_CullTransparentMesh: 1
+--- !u!114 &1872327824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872327820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99761ff3812337d408560840eadae744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GooglyPupilSpring
+  slider: {fileID: 1528214918}
+  pupil: {fileID: 1872327821}
+  eye: {fileID: 1510916015}
+  maxOffset: -2.4
+  spring: 676
+  damping: 10
+--- !u!114 &1872327825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872327820}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f5fed169fcf2a4d8a0e89c14a12c01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GooglyPupilUI
+  slider: {fileID: 1528214918}
+  pupil: {fileID: 1872327821}
+  eye: {fileID: 1510916015}
+  maxOffset: 5
+  followSpeed: 10
 --- !u!1 &1895659512
 GameObject:
   m_ObjectHideFlags: 0
