@@ -10,13 +10,15 @@ public class MoveOnXAxis : MonoBehaviour
     [Header("Timing")]
     public float releaseDurationLimit = 2f; // will be overwritten by timing system
 
-    [Header("Optional GameObject Toggles")]
+    [Header("GameObject Toggles")]
     [SerializeField] private GameObject objectToActivate;
     [SerializeField] private GameObject objectToDeactivate;
 
     [Header("Ragdolls")]
     [SerializeField] private ForceApplier upperRight, lowerRight, upperLeft, lowerLeft;
     [SerializeField] private float force;
+
+    [SerializeField] private FollowTarget followTarget;
 
     [Header("Saving")]
     [SerializeField] private MovementDistanceTracker movementDistanceTracker;
@@ -131,6 +133,7 @@ public class MoveOnXAxis : MonoBehaviour
 
     public void DisableScript()
     {
+        followTarget.enabled = false;
         gameActive = false;
 
         if (movementDistanceTracker != null)

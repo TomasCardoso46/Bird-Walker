@@ -788,6 +788,7 @@ MonoBehaviour:
   upperLeft: {fileID: 2991745872311301634}
   lowerLeft: {fileID: 2948326252029080386}
   force: 25
+  followTarget: {fileID: 391411343}
   movementDistanceTracker: {fileID: 840996033}
 --- !u!4 &304228956
 Transform:
