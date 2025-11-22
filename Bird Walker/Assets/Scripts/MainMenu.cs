@@ -14,6 +14,16 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Timed");
     }
 
+    public void Settings()
+    {
+        SceneManager.LoadScene("Settings");
+    }
+
+    public void Return()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     // This method quits the application
     public void Quit()
     {

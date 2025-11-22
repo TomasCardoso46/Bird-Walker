@@ -8,12 +8,11 @@ public class MoveOnXAxis : MonoBehaviour
     public float speed = 5f;
 
     [Header("Timing")]
-    public float releaseDurationLimit = 2f; // how long a key can stay released before failure
+    public float releaseDurationLimit = 2f; // will be overwritten by timing system
 
     [Header("Optional GameObject Toggles")]
     [SerializeField] private GameObject objectToActivate;
     [SerializeField] private GameObject objectToDeactivate;
-
 
     [Header("Ragdolls")]
     [SerializeField] private ForceApplier upperRight, lowerRight, upperLeft, lowerLeft;
@@ -40,16 +39,31 @@ public class MoveOnXAxis : MonoBehaviour
             if (pHeld && qHeld)
             {
                 Debug.Log("Both keys held - READY!");
+                // Try to find ApplyTimingOnStart
+                ApplyTimingOnStart timingScript = FindObjectOfType<ApplyTimingOnStart>();
+
+                if (timingScript != null)
+                {
+                    // Use timing value applied in this scene
+                    releaseDurationLimit = timingScript.gameplayTiming;
+                    Debug.Log("Timing applied to MoveOnXAxis: " + releaseDurationLimit);
+                }
+                else
+                {
+                    // No timing script → use default
+                    releaseDurationLimit = 0.5f;
+                    Debug.Log("No ApplyTimingOnStart found. Using default timing: 0.5");
+                }
                 gameStarted = true;
                 gameActive = true;
             }
-            return; // wait until both are held once
+            return;
         }
 
         // ---------- GAMEPLAY ----------
         if (!gameActive) return;
 
-        // --- Double press check (fail-safe) ---
+        // --- Double press check ---
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (lastKeyPressed == KeyCode.Q)
@@ -73,7 +87,7 @@ public class MoveOnXAxis : MonoBehaviour
             lastKeyPressed = KeyCode.P;
         }
 
-        // --- FAILURE CONDITION: both not held ---
+        // --- FAILURE: both not held ---
         if (!pHeld && !qHeld)
         {
             Debug.Log("Both keys released - FAILURE!");
@@ -82,7 +96,7 @@ public class MoveOnXAxis : MonoBehaviour
             return;
         }
 
-        // --- Handle release timers ---
+        // --- P Release Timer ---
         if (!pHeld)
         {
             pReleaseTimer += Time.deltaTime;
@@ -96,6 +110,7 @@ public class MoveOnXAxis : MonoBehaviour
         }
         else pReleaseTimer = 0f;
 
+        // --- Q Release Timer ---
         if (!qHeld)
         {
             qReleaseTimer += Time.deltaTime;
@@ -109,28 +124,23 @@ public class MoveOnXAxis : MonoBehaviour
         }
         else qReleaseTimer = 0f;
 
-        // --- MOVEMENT LOGIC ---
-        // Move when exactly one key is released (one held, one not)
+        // --- MOVEMENT ---
         if ((pHeld && !qHeld) || (!pHeld && qHeld))
-        {
             transform.Translate(Vector3.right * speed * Time.deltaTime);
-        }
-
-        // If both held — idle (no movement)
     }
 
     public void DisableScript()
     {
         gameActive = false;
+
         if (movementDistanceTracker != null)
             movementDistanceTracker.StopAndSave();
-        
 
         if (objectToActivate != null)
             objectToActivate.SetActive(true);
 
         //if (objectToDeactivate != null)
-            //objectToDeactivate.SetActive(false);
+        //    objectToDeactivate.SetActive(false);
 
         StartCoroutine(LoadMenuAfterDelay());
     }
